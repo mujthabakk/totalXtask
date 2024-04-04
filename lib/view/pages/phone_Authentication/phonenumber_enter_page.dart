@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:totalx_task/core/size/size.dart';
 import 'package:totalx_task/view/pages/otp/otp.dart';
 import 'package:totalx_task/view/widget/Button/button.dart';
@@ -21,8 +20,6 @@ class PhoneNumberEnterPage extends StatelessWidget {
             Center(
               child: Image.asset(
                 "assets/image/OBJECTS.png",
-                width: context.width(130),
-                height: context.width(102),
               ),
             ),
             SizedBox(
@@ -37,34 +34,39 @@ class PhoneNumberEnterPage extends StatelessWidget {
                   ),
             ),
             SizedBox(
-              height: context.height(20),
+              height: context.height(28),
             ),
             TextFormField(
-              decoration: InputDecoration(
+              keyboardType: TextInputType.phone,
+              decoration: const InputDecoration(
                 hintText: "Enter Phone Number",
                 border: OutlineInputBorder(
-                  borderSide: BorderSide(),
+                  borderRadius: BorderRadius.all(Radius.circular(17)),
+                  borderSide:
+                      BorderSide(color: Color.fromARGB(255, 41, 39, 39)),
                 ),
               ),
+            ),
+            SizedBox(
+              height: context.height(20),
             ),
             TextButton(
               onPressed: () {},
               child: RichText(
                 text: const TextSpan(
                   text: "By Continuing, I agree to TotalX’s",
-                  style: TextStyle(
-                    color: Colors.black,
-                  ),
+                  style: TextStyle(color: Colors.black, fontSize: 16),
                   children: [
                     TextSpan(
-                        text: " Terms and condition & privacy policy ",
-                        style: TextStyle(color: Colors.blue)),
+                      text: " Terms and condition & privacy policy ",
+                      style: TextStyle(color: Colors.blue, fontSize: 16),
+                    ),
                   ],
                 ),
               ),
             ),
             SizedBox(
-              height: context.height(20),
+              height: context.height(40),
             ),
             FrontendPagesButton(
               text: 'Get OTP',

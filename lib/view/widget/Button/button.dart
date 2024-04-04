@@ -10,8 +10,8 @@ class FrontendPagesButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: context.width(328),
-      height: context.height(90),
+      width: context.width(358),
+      height: context.height(110),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.black,

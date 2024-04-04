@@ -13,6 +13,9 @@ class Otptextfield extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Center(
+              child: Image.asset("assets/image/Group (3).png"),
+            ),
             Text(
               "Enter your verification code",
               style: Theme.of(context).textTheme.bodyLarge!.copyWith(
