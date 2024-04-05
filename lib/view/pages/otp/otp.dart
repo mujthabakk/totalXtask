@@ -1,8 +1,7 @@
-import 'dart:js';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:totalx_task/core/size/size.dart';
+import 'package:totalx_task/view/pages/homepage/homepage.dart';
 import 'package:totalx_task/view/widget/Button/button.dart';
 
 class Otptextfield extends StatelessWidget {
@@ -44,7 +43,7 @@ class Otptextfield extends StatelessWidget {
                 height: context.height(40),
               ),
               OtpTextField(
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: BorderRadius.circular(8),
                 cursorColor: Colors.red,
                 textStyle: const TextStyle(color: Colors.red),
                 numberOfFields: 6,
@@ -73,7 +72,13 @@ class Otptextfield extends StatelessWidget {
               ),
               FrontendPagesButton(
                 text: 'Verify',
-                ontap: () {},
+                ontap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const HomePage(),
+                      ));
+                },
               ),
             ],
           ),

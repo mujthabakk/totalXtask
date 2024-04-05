@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:totalx_task/core/app_theme.dart';
-import 'package:totalx_task/view/pages/homepage/homepage.dart';
 import 'package:totalx_task/view/pages/phone_Authentication/phonenumber_enter_page.dart';
 
 void main() {
@@ -15,6 +14,6 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: AppTheme.theme(),
-        home: const HomePage());
+        home: const PhoneNumberEnterPage());
   }
 }
