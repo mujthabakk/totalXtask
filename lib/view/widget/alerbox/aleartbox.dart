@@ -1,7 +1,7 @@
-
-
 import 'package:flutter/material.dart';
+
 import 'package:totalx_task/core/size/size.dart';
+import 'package:totalx_task/service/user_service/user_service.dart';
 import 'package:totalx_task/view/widget/Textfield/text_field.dart';
 
 class AlertBox extends StatelessWidget {
@@ -13,6 +13,11 @@ class AlertBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController name = TextEditingController();
+    TextEditingController phone = TextEditingController();
+    TextEditingController age = TextEditingController();
+    TextEditingController image = TextEditingController();
+
     return AlertDialog(
       title: Text(
         text,
@@ -28,16 +33,18 @@ class AlertBox extends StatelessWidget {
               backgroundImage: const AssetImage('assets/image/Group 18796.png'),
               maxRadius: context.width(40),
             ),
-            const Textfiels(
+            Textfiels(
               labeltext: 'Enter your name',
               toptext: 'Name',
+              textEditingController: name,
             ),
             SizedBox(
               height: context.height(20),
             ),
-            const Textfiels(
+            Textfiels(
               labeltext: 'Enter your number',
               toptext: 'number',
+              textEditingController: phone,
             )
           ],
         ),
@@ -48,7 +55,10 @@ class AlertBox extends StatelessWidget {
             style: ElevatedButton.styleFrom(
               backgroundColor: const Color.fromARGB(255, 26, 124, 204),
             ),
-            onPressed: () {},
+            onPressed: () {
+              FireStoreservice.create(
+                  name.text, age.text, phone.text, image.toString());
+            },
             child: const Text(
               "save",
               style: TextStyle(color: Colors.white),

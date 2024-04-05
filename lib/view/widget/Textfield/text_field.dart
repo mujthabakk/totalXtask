@@ -4,10 +4,11 @@ import 'package:totalx_task/core/size/size.dart';
 class Textfiels extends StatelessWidget {
   final String toptext;
   final String labeltext;
+  final TextEditingController textEditingController;
   const Textfiels({
     super.key,
     required this.labeltext,
-    required this.toptext,
+    required this.toptext, required this.textEditingController,
   });
 
   @override
@@ -20,6 +21,7 @@ class Textfiels extends StatelessWidget {
           height: context.height(18),
         ),
         TextField(
+          controller: textEditingController,
           decoration: InputDecoration(
             focusColor: Colors.black,
             focusedBorder: const OutlineInputBorder(),
