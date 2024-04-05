@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:totalx_task/controller/auth_controller/auth_controllerr.dart';
 import 'package:totalx_task/core/size/size.dart';
-import 'package:totalx_task/view/pages/otp/otp.dart';
+import 'package:totalx_task/view/pages/auth/auth_page.dart';
 import 'package:totalx_task/view/widget/Button/button.dart';
 
 class PhoneNumberEnterPage extends StatelessWidget {
@@ -8,6 +10,8 @@ class PhoneNumberEnterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController phone = TextEditingController();
+    final provider = Provider.of<AuthController>(context);
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.symmetric(
@@ -37,6 +41,7 @@ class PhoneNumberEnterPage extends StatelessWidget {
               height: context.height(28),
             ),
             TextFormField(
+              controller: phone,
               keyboardType: TextInputType.phone,
               decoration: const InputDecoration(
                 hintText: "Enter Phone Number",
@@ -68,14 +73,24 @@ class PhoneNumberEnterPage extends StatelessWidget {
             SizedBox(
               height: context.height(40),
             ),
-            FrontendPagesButton(
-              text: 'Get OTP',
-              ontap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const Otptextfield(),
-                    ));
+            Consumer<AuthController>(
+              builder: (context, value, child) {
+                if (value.isLoading == true) {
+                  return const CircularProgressIndicator();
+                }
+                return FrontendPagesButton(
+                  text: 'Get OTP',
+                  ontap: () {
+                    if (phone.text.isNotEmpty) {
+                      provider.createUser(context, phone: "+91${phone.text}");
+                      pageController.animateToPage(
+                        1,
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.linear,
+                      );
+                    }
+                  },
+                );
               },
             )
           ],

@@ -1,9 +1,26 @@
-import 'package:flutter/material.dart';
-import 'package:totalx_task/core/app_theme.dart';
-import 'package:totalx_task/view/pages/phone_Authentication/phonenumber_enter_page.dart';
+import 'dart:async';
 
-void main() {
-  runApp(const MainApp());
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:totalx_task/controller/auth_controller/auth_controllerr.dart';
+import 'package:totalx_task/core/app_theme.dart';
+import 'package:totalx_task/firebase_options.dart';
+import 'package:totalx_task/view/pages/splash/splash_page.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
+  FirebaseFirestore.instance.useFirestoreEmulator('localhost', 8080);
+
+  runApp(
+    const MainApp(),
+  );
 }
 
 class MainApp extends StatelessWidget {
@@ -11,9 +28,17 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<AuthController>(
+          create: (_) => AuthController(),
+        )
+      ],
+      child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: AppTheme.theme(),
-        home: const PhoneNumberEnterPage());
+        home: const SplashPage(),
+      ),
+    );
   }
 }

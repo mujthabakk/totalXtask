@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
+import 'package:provider/provider.dart';
+import 'package:totalx_task/controller/auth_controller/auth_controllerr.dart';
 import 'package:totalx_task/core/size/size.dart';
-import 'package:totalx_task/view/pages/homepage/homepage.dart';
 import 'package:totalx_task/view/widget/Button/button.dart';
 
-class Otptextfield extends StatelessWidget {
-  const Otptextfield({super.key});
+class OtpEnteringPage extends StatelessWidget {
+  const OtpEnteringPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<AuthController>(context);
     return Scaffold(
       body: Center(
         child: Padding(
@@ -50,13 +52,19 @@ class Otptextfield extends StatelessWidget {
                 focusedBorderColor: Colors.black,
                 showFieldAsBox: true,
                 onCodeChanged: (String code) {},
-                onSubmit: (String verificationCode) {},
+                onSubmit: (String verificationCode) {
+                  provider.signInWithOtp(
+                    context,
+                    smsCode: verificationCode,
+                  );
+                },
               ),
               Center(
-                  child: Padding(
-                padding: EdgeInsets.only(top: context.height(10)),
-                child: const Text("data"),
-              )),
+                child: Padding(
+                  padding: EdgeInsets.only(top: context.height(10)),
+                  child: const Text("data"),
+                ),
+              ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -72,13 +80,7 @@ class Otptextfield extends StatelessWidget {
               ),
               FrontendPagesButton(
                 text: 'Verify',
-                ontap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const HomePage(),
-                      ));
-                },
+                ontap: () {},
               ),
             ],
           ),
