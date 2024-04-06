@@ -1,4 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:totalx_task/controller/image_picker/image_picker_controller.dart';
 
 import 'package:totalx_task/core/size/size.dart';
 import 'package:totalx_task/service/user_service/user_service.dart';
@@ -18,6 +22,8 @@ class AlertBox extends StatelessWidget {
     TextEditingController age = TextEditingController();
     TextEditingController image = TextEditingController();
 
+    final imageProvider = Provider.of<ImagePickerController>(context);
+
     return AlertDialog(
       title: Text(
         text,
@@ -30,10 +36,27 @@ class AlertBox extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              CircleAvatar(
-                backgroundImage:
-                    const AssetImage('assets/image/Group 18796.png'),
-                maxRadius: context.width(40),
+              InkWell(
+                borderRadius: BorderRadius.circular(context.width(240)),
+                onTap: () {
+                  imageProvider.pickImageGallery(context);
+                },
+                child: Consumer<ImagePickerController>(
+                  builder: (context, value, _) {
+                    return value.image != null
+                        ? CircleAvatar(
+                            backgroundImage: FileImage(
+                              File(value.image!.path),
+                            ),
+                            maxRadius: context.width(40),
+                          )
+                        : CircleAvatar(
+                            backgroundImage: const AssetImage(
+                                'assets/image/Group 18796.png'),
+                            maxRadius: context.width(40),
+                          );
+                  },
+                ),
               ),
               Textfiels(
                 labeltext: 'Enter your name',
@@ -69,7 +92,11 @@ class AlertBox extends StatelessWidget {
             ),
             onPressed: () {
               FireStoreservice.create(
-                  name.text, age.text, phone.text, image.toString());
+                name.text,
+                age.text,
+                phone.text,
+                imageProvider.reference.toString(),
+              );
               Navigator.pop(context);
               age.clear();
               phone.clear();

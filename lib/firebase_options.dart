@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -28,10 +25,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -49,6 +43,16 @@ class DefaultFirebaseOptions {
     }
   }
 
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyCVa6NP9zV_nhCxJXCfyUHBEtPMu5E3p64',
+    appId: '1:810173979958:web:4dc78bf997e9cfd1ebe797',
+    messagingSenderId: '810173979958',
+    projectId: 'totalxtask',
+    authDomain: 'totalxtask.firebaseapp.com',
+    storageBucket: 'totalxtask.appspot.com',
+    measurementId: 'G-XBE1GZFY5T',
+  );
+
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyA4_6FC5YgNkOrK6N6TUFh-XtBtJmizUx0',
     appId: '1:810173979958:android:9fd7456178fe299bebe797',
@@ -64,5 +68,14 @@ class DefaultFirebaseOptions {
     projectId: 'totalxtask',
     storageBucket: 'totalxtask.appspot.com',
     iosBundleId: 'com.example.totalxTask',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyDutIUD45u7YWmHn_OrdM_uerMo5niy2vQ',
+    appId: '1:810173979958:ios:97e14c12a1f2a8b5ebe797',
+    messagingSenderId: '810173979958',
+    projectId: 'totalxtask',
+    storageBucket: 'totalxtask.appspot.com',
+    iosBundleId: 'com.example.totalxTask.RunnerTests',
   );
 }

@@ -16,7 +16,7 @@ class FireStoreservice {
     try {
       return db.collection('contact').add(data);
     } on FirebaseException catch (e) {
-      throw UserExceptio(message: e.toString());
+      throw UserExceptio(errorMessage: e.message);
     }
   }
 
@@ -24,7 +24,7 @@ class FireStoreservice {
     try {
       return db.collection('contact').orderBy("name").snapshots();
     } on FirebaseException catch (e) {
-      throw UserExceptio(message: e.toString());
+      throw UserExceptio(errorMessage: e.message);
     }
   }
 
@@ -36,7 +36,7 @@ class FireStoreservice {
           .where('age', isGreaterThanOrEqualTo: '60')
           .snapshots();
     } on FirebaseException catch (e) {
-      throw UserExceptio(message: e.toString());
+      throw UserExceptio(errorMessage: e.message);
     }
   }
 
@@ -48,7 +48,7 @@ class FireStoreservice {
           .where('age', isLessThan: '60')
           .snapshots();
     } on FirebaseException catch (e) {
-      throw UserExceptio(message: e.toString());
+      throw UserExceptio(errorMessage: e.message);
     }
   }
 
@@ -56,7 +56,23 @@ class FireStoreservice {
     try {
       return db.collection('contact').doc(id).delete();
     } on FirebaseException catch (e) {
-      throw UserExceptio(message: e.toString());
+      throw UserExceptio(errorMessage: e.message);
+    }
+  }
+
+  static Stream<QuerySnapshot<Map<String, dynamic>>> searchStream(
+    String searchText,
+  ) {
+    try {
+      return db
+          .collection('contact')
+          .where(
+            'name',
+            isEqualTo: searchText,
+          )
+          .snapshots();
+    } on FirebaseException catch (e) {
+      throw UserExceptio(errorMessage: e.message);
     }
   }
 }

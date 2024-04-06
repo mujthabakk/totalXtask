@@ -52,7 +52,13 @@ class HomePage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(30),
                       ),
                     ),
-                    onChanged: (value) {},
+                    onChanged: (value) {
+                      if (value.isNotEmpty) {
+                        userProvider.search(value);
+                      } else {
+                        userProvider.getUser();
+                      }
+                    },
                   ),
                 ),
                 InkWell(
@@ -140,20 +146,25 @@ class HomePage extends StatelessWidget {
                       if (snapshot.hasError) {
                         return Center(child: Text('Error: ${snapshot.error}'));
                       }
-                      return ListView.builder(
-                        itemCount: snapshot.data?.docs.length,
-                        itemBuilder: (context, index) => Card(
-                          color: Colors.white,
-                          child: ListTile(
-                            title: Text(
-                                snapshot.data?.docs[index].data()["name"] ??
-                                    ""),
-                            subtitle: Text(
-                                snapshot.data?.docs[index].data()["age"] ?? ""),
-                            leading: const CircleAvatar(),
-                          ),
-                        ),
-                      );
+                      return snapshot.data!.docs.isEmpty
+                          ? const Center(
+                              child: Text("No Users"),
+                            )
+                          : ListView.builder(
+                              itemCount: snapshot.data?.docs.length,
+                              itemBuilder: (context, index) => Card(
+                                color: Colors.white,
+                                child: ListTile(
+                                  title: Text(snapshot.data?.docs[index]
+                                          .data()["name"] ??
+                                      ""),
+                                  subtitle: Text(snapshot.data?.docs[index]
+                                          .data()["age"] ??
+                                      ""),
+                                  leading: const CircleAvatar(),
+                                ),
+                              ),
+                            );
                     },
                   );
                 },

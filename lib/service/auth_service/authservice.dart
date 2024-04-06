@@ -18,9 +18,7 @@ class AuthServices {
       await auth.verifyPhoneNumber(
         phoneNumber: phone,
         verificationCompleted: (phoneAuthCredential) {},
-        verificationFailed: (error) {
-          throw error;
-        },
+        verificationFailed: (error) {},
         codeSent: codeSent,
         codeAutoRetrievalTimeout: (verificationId) {},
       );

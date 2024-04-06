@@ -37,4 +37,13 @@ class UserCollectionController extends ChangeNotifier {
     }
     notifyListeners();
   }
+
+  void search(String searchText) {
+    try {
+      _collectStream = FireStoreservice.searchStream(searchText);
+    } on BaseException catch (e) {
+      throw e.message;
+    }
+    notifyListeners();
+  }
 }
