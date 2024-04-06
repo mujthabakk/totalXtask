@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:totalx_task/controller/filter_controller/filter_controller.dart';
+import 'package:totalx_task/controller/user_provider/user_controller.dart';
 import 'package:totalx_task/core/size/size.dart';
 import 'package:totalx_task/view/widget/alerbox/aleartbox.dart';
 import 'package:totalx_task/view/widget/radiobutton/radiobutton.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  const HomePage({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserCollectionController>(context);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
@@ -49,48 +56,69 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
                 InkWell(
-                    onTap: () {
-                      showModalBottomSheet(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return Container(
-                            height: context.height(650),
-                            width: context.width(double.infinity),
-                            decoration: const BoxDecoration(
-                                borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(40),
-                                    topRight: Radius.circular(40))),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Padding(
-                                  padding: EdgeInsets.only(left: 20, top: 20),
-                                  child: Text(
-                                    "Sort",
-                                    style: TextStyle(
-                                        fontSize: 25,
-                                        fontWeight: FontWeight.w900),
-                                  ),
-                                ),
-                                Radiobutton(
-                                  text: 'All',
-                                  ontap: (String) {},
-                                ),
-                                Radiobutton(
-                                  text: 'Age: Elder',
-                                  ontap: (String) {},
-                                ),
-                                Radiobutton(
-                                  text: 'Age: Younger',
-                                  ontap: (String) {},
-                                ),
-                              ],
+                  onTap: () {
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return Container(
+                          height: context.height(650),
+                          width: context.width(double.infinity),
+                          decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(40),
+                              topRight: Radius.circular(40),
                             ),
-                          );
-                        },
-                      );
-                    },
-                    child: Image.asset("assets/image/Vector (2).png"))
+                          ),
+                          child: ValueListenableBuilder(
+                              valueListenable: filterController,
+                              builder: (context, value, _) {
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Padding(
+                                      padding:
+                                          EdgeInsets.only(left: 20, top: 20),
+                                      child: Text(
+                                        "Sort",
+                                        style: TextStyle(
+                                          fontSize: 25,
+                                          fontWeight: FontWeight.w900,
+                                        ),
+                                      ),
+                                    ),
+                                    Radiobutton(
+                                      isSelected: value == 0 ? true : false,
+                                      text: 'All',
+                                      ontap: (_) {
+                                        filterController.value = 0;
+                                        userProvider.getUser();
+                                      },
+                                    ),
+                                    Radiobutton(
+                                      isSelected: value == 1 ? true : false,
+                                      text: 'Age: Elder',
+                                      ontap: (_) {
+                                        filterController.value = 1;
+                                        userProvider.sortUserAgeGrtrSixty();
+                                      },
+                                    ),
+                                    Radiobutton(
+                                      isSelected: value == 2 ? true : false,
+                                      text: 'Age: Younger',
+                                      ontap: (_) {
+                                        filterController.value = 2;
+                                        userProvider.sortUserAgelsthanSixty();
+                                      },
+                                    ),
+                                  ],
+                                );
+                              }),
+                        );
+                      },
+                    );
+                  },
+                  child: Image.asset("assets/image/Vector (2).png"),
+                )
               ],
             ),
             const Padding(
@@ -101,16 +129,34 @@ class HomePage extends StatelessWidget {
               ),
             ),
             Expanded(
-              child: ListView.builder(
-                itemCount: 12,
-                itemBuilder: (context, index) => Card(
-                  color: Colors.white,
-                  child: ListTile(
-                    title: Text("name$index"),
-                    subtitle: const Text("age"),
-                    leading: const CircleAvatar(),
-                  ),
-                ),
+              child: Consumer<UserCollectionController>(
+                builder: (context, controller, _) {
+                  return StreamBuilder(
+                    stream: controller.userCollection,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(child: CircularProgressIndicator());
+                      }
+                      if (snapshot.hasError) {
+                        return Center(child: Text('Error: ${snapshot.error}'));
+                      }
+                      return ListView.builder(
+                        itemCount: snapshot.data?.docs.length,
+                        itemBuilder: (context, index) => Card(
+                          color: Colors.white,
+                          child: ListTile(
+                            title: Text(
+                                snapshot.data?.docs[index].data()["name"] ??
+                                    ""),
+                            subtitle: Text(
+                                snapshot.data?.docs[index].data()["age"] ?? ""),
+                            leading: const CircleAvatar(),
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                },
               ),
             ),
           ],

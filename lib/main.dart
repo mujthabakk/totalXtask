@@ -32,10 +32,11 @@ class MainApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<AuthController>(
-            create: (_) => AuthController(),
-            child: ChangeNotifierProvider<UserController>(
-              create: (_) =>UserController (),
-            ))
+          create: (_) => AuthController(),
+        ),
+        ChangeNotifierProvider<UserCollectionController>(
+          create: (context) => UserCollectionController(),
+        )
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

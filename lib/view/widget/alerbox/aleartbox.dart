@@ -25,32 +25,44 @@ class AlertBox extends StatelessWidget {
       ),
       content: SizedBox(
         width: context.width(300),
-        height: context.width(250),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            CircleAvatar(
-              backgroundImage: const AssetImage('assets/image/Group 18796.png'),
-              maxRadius: context.width(40),
-            ),
-            Textfiels(
-              labeltext: 'Enter your name',
-              toptext: 'Name',
-              textEditingController: name,
-            ),
-            SizedBox(
-              height: context.height(20),
-            ),
-            Textfiels(
-              labeltext: 'Enter your number',
-              toptext: 'number',
-              textEditingController: phone,
-            )
-          ],
+        height: context.width(330),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CircleAvatar(
+                backgroundImage:
+                    const AssetImage('assets/image/Group 18796.png'),
+                maxRadius: context.width(40),
+              ),
+              Textfiels(
+                labeltext: 'Enter your name',
+                toptext: 'Name',
+                textEditingController: name,
+              ),
+              SizedBox(
+                height: context.height(20),
+              ),
+              Textfiels(
+                labeltext: 'Enter your number',
+                toptext: 'number',
+                textEditingController: phone,
+              ),
+              Textfiels(
+                labeltext: 'Enter your age',
+                toptext: 'age',
+                textEditingController: age,
+              ),
+            ],
+          ),
         ),
       ),
       actions: <Widget>[
-        ElevatedButton(onPressed: () {}, child: const Text("Cancel")),
+        ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: const Text("Cancel")),
         ElevatedButton(
             style: ElevatedButton.styleFrom(
               backgroundColor: const Color.fromARGB(255, 26, 124, 204),
@@ -58,6 +70,10 @@ class AlertBox extends StatelessWidget {
             onPressed: () {
               FireStoreservice.create(
                   name.text, age.text, phone.text, image.toString());
+              Navigator.pop(context);
+              age.clear();
+              phone.clear();
+              name.clear();
             },
             child: const Text(
               "save",

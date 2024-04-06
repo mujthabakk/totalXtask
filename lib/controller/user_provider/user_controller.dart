@@ -1,34 +1,40 @@
-import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:totalx_task/core/exception/user_exception.dart';
+import 'package:flutter/material.dart';
+import 'package:totalx_task/core/exception/base_exception.dart';
+import 'package:totalx_task/service/user_service/user_service.dart';
 
-class UserController extends ChangeNotifier {
-  final FirebaseFirestore db = FirebaseFirestore.instance;
+class UserCollectionController extends ChangeNotifier {
+  Stream<QuerySnapshot<Map<String, dynamic>>> _collectStream =
+      FireStoreservice.getUserStream();
 
-  Future<DocumentReference<Map<String, dynamic>>> create(
-    String name,
-    String age,
-    String phone,
-    String image,
-  ) async {
-    final data = {
-      "name": name,
-      "age": age,
-      "phone": phone,
-      "image": image,
-    };
-
-    try {
-      final result = await db.collection("contact").add(data);
-      notifyListeners();
-      return result;
-    } on FirebaseException catch (e) {
-      throw UserExceptio(message: e.toString());
-    }
+  Stream<QuerySnapshot<Map<String, dynamic>>> get userCollection {
+    return _collectStream;
   }
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> readUser() {
+  void getUser() {
+    try {
+      _collectStream = FireStoreservice.getUserStream();
+    } on BaseException catch (e) {
+      throw e.message;
+    }
     notifyListeners();
-    return db.collection("contact").snapshots();
+  }
+
+  void sortUserAgeGrtrSixty() {
+    try {
+      _collectStream = FireStoreservice.sortUserAgeGrtrSixtyStream();
+    } on BaseException catch (e) {
+      throw e.message;
+    }
+    notifyListeners();
+  }
+
+  void sortUserAgelsthanSixty() {
+    try {
+      _collectStream = FireStoreservice.sortUserAgelsthanSixtyStream();
+    } on BaseException catch (e) {
+      throw e.message;
+    }
+    notifyListeners();
   }
 }
