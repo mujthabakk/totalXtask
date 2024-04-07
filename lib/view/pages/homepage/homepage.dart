@@ -19,17 +19,10 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
-        // leading: IconButton(
-        //   onPressed: () {},
-        //   icon: const Icon(
-        //     Icons.location_on,
-        //     color: Colors.white,
-        //   ),
-        // ),
         centerTitle: false,
         title: InkWell(
-          onTap: ()async {
-           await location();
+          onTap: () {
+            location();
           },
           child: const Row(
             children: [

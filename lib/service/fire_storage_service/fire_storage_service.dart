@@ -8,7 +8,7 @@ class FireStorageService {
 
   static Future<Reference> uploadProfile(File image) async {
     try {
-      return await storageRef.putFile(image).snapshot.ref;
+      return  storageRef.putFile(image).snapshot.ref;
     } on FirebaseException catch (e) {
       throw e.message ?? "unkeown exception occured";
     }

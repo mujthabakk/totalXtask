@@ -66,15 +66,14 @@ class AlertBox extends StatelessWidget {
                 height: context.height(20),
               ),
               Textfiels(
-                labeltext: 'Enter your age',
-                toptext: 'age',
-                textEditingController: age,
-              ),
-              Textfiels(
                 labeltext: 'Enter your number',
                 toptext: 'number',
                 textEditingController: phone,
-                keybordtype: TextInputType.phone,
+              ),
+              Textfiels(
+                labeltext: 'Enter your age',
+                toptext: 'age',
+                textEditingController: age,
               ),
             ],
           ),

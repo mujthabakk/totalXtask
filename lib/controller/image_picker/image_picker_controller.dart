@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:totalx_task/core/utils/error_snack_bar.dart';
@@ -9,7 +8,7 @@ import 'package:totalx_task/service/fire_storage_service/fire_storage_service.da
 
 class ImagePickerController extends ChangeNotifier {
   final picker = ImagePicker();
-  late Reference reference;
+   Reference? reference;
   XFile? _image;
 
   XFile? get image => _image;
