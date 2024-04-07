@@ -20,7 +20,6 @@ class AlertBox extends StatelessWidget {
     TextEditingController name = TextEditingController();
     TextEditingController phone = TextEditingController();
     TextEditingController age = TextEditingController();
-    TextEditingController image = TextEditingController();
 
     final imageProvider = Provider.of<ImagePickerController>(context);
 
@@ -67,14 +66,15 @@ class AlertBox extends StatelessWidget {
                 height: context.height(20),
               ),
               Textfiels(
-                labeltext: 'Enter your number',
-                toptext: 'number',
-                textEditingController: phone,
-              ),
-              Textfiels(
                 labeltext: 'Enter your age',
                 toptext: 'age',
                 textEditingController: age,
+              ),
+              Textfiels(
+                labeltext: 'Enter your number',
+                toptext: 'number',
+                textEditingController: phone,
+                keybordtype: TextInputType.phone,
               ),
             ],
           ),

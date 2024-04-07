@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:totalx_task/controller/filter_controller/filter_controller.dart';
 import 'package:totalx_task/controller/user_provider/user_controller.dart';
 import 'package:totalx_task/core/size/size.dart';
+import 'package:totalx_task/core/utils/url_luncher/url_luncher_.dart';
 import 'package:totalx_task/view/widget/alerbox/aleartbox.dart';
 import 'package:totalx_task/view/widget/radiobutton/radiobutton.dart';
 
@@ -18,17 +19,30 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
-        leading: IconButton(
-          onPressed: () {},
-          icon: const Icon(
-            Icons.location_on,
-            color: Colors.white,
-          ),
-        ),
+        // leading: IconButton(
+        //   onPressed: () {},
+        //   icon: const Icon(
+        //     Icons.location_on,
+        //     color: Colors.white,
+        //   ),
+        // ),
         centerTitle: false,
-        title: const Text(
-          "Nilambur",
-          style: TextStyle(color: Colors.white),
+        title: InkWell(
+          onTap: ()async {
+           await location();
+          },
+          child: const Row(
+            children: [
+              Icon(
+                Icons.location_on,
+                color: Colors.white,
+              ),
+              Text(
+                "Nilambur",
+                style: TextStyle(color: Colors.white),
+              ),
+            ],
+          ),
         ),
       ),
       body: Padding(
